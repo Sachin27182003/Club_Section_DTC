@@ -1,0 +1,512 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: sans-serif, Arial, Helvetica;
+}
+
+body {
+  /* background-color: red; */
+  background-color: rgb(71, 71, 188);
+}
+
+.container {
+  /* width: 100vw; */
+  background-color: rgb(71, 71, 188);
+}
+
+/* Navbar Section */
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  gap: 35vw;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+
+  /* position: sticky;
+    top: 0;
+    z-index: 1000; */
+}
+
+.logo-dtc-nav {
+  width: 50px;
+}
+
+.logo-dtc {
+  width: 50px;
+  /* height: 30px; */
+}
+
+.navbar-logo-text {
+  font-size: 20px;
+}
+
+.navbar-option a {
+  text-decoration: none;
+}
+
+.navbar-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-center a svg {
+  width: 15px;
+  height: 15px;
+  color: white;
+}
+
+.navbar-center-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-text {
+  color: white;
+}
+
+/* Hero Section */
+
+.hero-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20vw;
+  height: 90vh;
+}
+
+.hero-left h3 {
+  font-size: 30px;
+}
+
+.hero-left h1 {
+  font-size: 100px;
+  color: rgb(239, 92, 66);
+}
+
+.hero-left p {
+  font-size: 20px;
+}
+
+.hero-left button {
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: rgb(35, 44, 114);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.carousel {
+  position: relative;
+  width: 80%;
+}
+
+.mySlides {
+  display: none;
+}
+
+.fade {
+  animation: fade 1s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.building-img {
+  width: 200px;
+  margin-bottom: 20px;
+  border-radius: 100px;
+}
+
+/* Clubs & Society */
+
+.clubs-society {
+  padding: 30px;
+  text-align: center;
+  color: white;
+  background-color: rgb(35, 44, 114);
+}
+
+.clubs-society h1 {
+    margin-bottom: 15px;
+}
+
+.society {
+    padding: 20px;
+    background-color: rgb(71, 71, 188);
+    border: 2px solid white;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+/* Technical Society */
+
+.clubs {
+  padding: 20px 30px 20px 30px;
+  text-align: center;
+  color: white;
+}
+
+.clubs h2 {
+    margin-bottom: 25px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #eaeaea;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  color: #111;
+}
+
+.card p {
+  color: #555;
+  font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------- */
+/* Events Section */
+.events-section {
+  background: #4b4b9b;
+  padding: 40px;
+  color: white;
+}
+
+.main-title-event {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.sub-title-event {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.card-event {
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  color: #000;
+}
+
+/* HEADER */
+.card-header-event {
+  padding: 10px;
+  background: #f2f2f2;
+}
+
+.org-event {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-event {
+  width: 30px;
+  height: 30px;
+}
+
+/* IMAGE */
+.card-image-event {
+  position: relative;
+}
+
+.card-image-event img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.badge-event {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #22c55e;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* FOOTER */
+.card-footer-event {
+  padding: 12px;
+}
+
+.card-footer-event h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.card-footer-event p {
+  font-size: 13px;
+  color: gray;
+}
+
+/* --------------------------------------------------------------------------------- */
+/* Past Events */
+.events-section-event-past {
+  padding: 30px;
+  color: white;
+  background-color: #4b4b9b;
+}
+
+.title-event-past {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* WRAPPER */
+.wrapper-event-past {
+  position: relative;
+}
+
+/* SCROLL CONTAINER */
+.scroll-container-event-past {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.scroll-container-event-past::-webkit-scrollbar {
+  display: none;
+}
+
+/* CARD */
+.card-event-past {
+  min-width: 260px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  color: black;
+  flex-shrink: 0;
+}
+
+/* HEADER */
+.card-header-event-past {
+  padding: 10px;
+  background: #f1f1f1;
+}
+
+.org-event-past {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-event-past {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* IMAGE */
+.card-image-event-past {
+  position: relative;
+}
+
+.card-image-event-past img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+/* BADGE */
+.badge-event-past {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #ef4444;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* FOOTER */
+.card-footer-event-past {
+  padding: 12px;
+}
+
+.card-footer-event-past h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.card-footer-event-past p {
+  font-size: 13px;
+  color: gray;
+}
+
+/* NAV BUTTONS */
+.nav-btn-event-past {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  font-size: 22px;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.left-event-past {
+  left: -10px;
+}
+
+.right-event-past {
+  right: -10px;
+}
+
+.nav-btn-event-past:hover {
+  background: #ddd;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------- */
+/* Footer Section */
+.main-club-footer {
+  background: #26345b;
+  color: #fff;
+  padding: 40px 20px 0;
+}
+
+/* CONTAINER */
+.container-club-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* LEFT */
+.left-club-footer {
+  flex: 1;
+  min-width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers horizontally */
+  text-align: center;    /* centers text */
+}
+
+.logo-club-footer {
+  width: 70px;
+  margin-bottom: 15px;
+}
+
+.left-club-footer h2 {
+  color: #ff7a18;
+  margin-bottom: 10px;
+}
+
+.left-club-footer p {
+  font-size: 14px;
+  margin: 5px 0;
+  color: #d1d5db;
+}
+
+/* CENTER */
+.center-club-footer {
+  flex: 1;
+  text-align: center;
+  min-width: 200px;
+}
+
+.center-club-footer h3 {
+  margin-bottom: 15px;
+}
+
+.socials-club-footer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.socials-club-footer span {
+  width: 40px;
+  height: 40px;
+  background: #3b4a75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.socials-club-footer span:hover {
+  background: #ff7a18;
+}
+
+/* RIGHT */
+.right-club-footer {
+  flex: 1;
+  min-width: 300px;
+}
+
+.right-club-footer iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* BOTTOM */
+.bottom-club-footer {
+  margin-top: 30px;
+  border-top: 1px solid #444;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  color: #ccc;
+}
