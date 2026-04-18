@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTC Events Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-hero: #3d3a8c;
+      --bg-dark: #1a1d2e;
+      --bg-card: #ffffff;
+      --accent-orange: #f97316;
+      --accent-blue: #4f46e5;
+      --text-white: #ffffff;
+      --text-dark: #1a1d2e;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --border: #e5e7eb;
+      --nav-bg: #1e1b4b;
+      --upcoming-badge: #f97316;
+      --past-badge: #6b7280;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f5f6fa;
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 60px;
+      box-shadow: 0 2px 20px rgba(0,0,0,.4);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      background: var(--accent-orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .nav-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-white);
+      letter-spacing: -.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .nav-links svg { width: 15px; height: 15px; }
+
+    .btn-login {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,.5);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-login:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--bg-hero);
+      padding: 70px 60px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(79,70,229,.35) 0%, transparent 70%);
+      top: -150px; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-content { max-width: 500px; }
+
+    .hero-subtitle {
+      color: rgba(255,255,255,.75);
+      font-size: 15px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(48px, 7vw, 80px);
+      font-weight: 800;
+      color: var(--accent-orange);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .hero-campus {
+      color: rgba(255,255,255,.9);
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+
+    .hero-desc {
+      color: rgba(255,255,255,.65);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 360px;
+    }
+
+    .btn-explore {
+      display: inline-block;
+      background: var(--text-dark);
+      color: #fff;
+      padding: 11px 26px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-explore:hover { background: #111; transform: translateY(-1px); }
+
+    .hero-logo-wrap {
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-logo-inner {
+      width: 150px;
+      height: 150px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-logo-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: 2px;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 60px 40px; }
+
+    .section-dark {
+      background: var(--bg-dark);
+      padding: 60px 40px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text-white);
+      margin-bottom: 32px;
+    }
+
+    .section-title.light { color: var(--text-dark); }
+
+    /* ── CLUBS ── */
+    .clubs-category {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      cursor: pointer;
+      user-select: none;
+      background: rgba(255,255,255,.04);
+      transition: background .2s;
+    }
+
+    .category-header:hover { background: rgba(255,255,255,.08); }
+
+    .category-header h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255,255,255,.9);
+    }
+
+    .category-toggle {
+      color: rgba(255,255,255,.6);
+      font-size: 13px;
+      transition: transform .3s;
+    }
+
+    .category-toggle.open { transform: rotate(180deg); }
+
+    .clubs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .club-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-sm);
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .club-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+
+    .club-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #1a1d2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+      color: #fff;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .club-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    .club-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .club-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Featured clubs */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .featured-col-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    /* ── EVENTS ── */
+    .events-section { background: var(--bg-hero); padding: 60px 40px; }
+
+    .events-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 32px;
+    }
+
+    .events-sub {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 16px;
+    }
+
+    .events-carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.2) transparent;
+    }
+
+    .events-carousel::-webkit-scrollbar { height: 4px; }
+    .events-carousel::-webkit-scrollbar-track { background: transparent; }
+    .events-carousel::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 2px; }
+
+    .event-card {
+      flex-shrink: 0;
+      width: 200px;
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .event-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.25); }
+
+    .event-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      position: relative;
+    }
+
+    .event-img-placeholder {
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(135deg, #1a1d2e 0%, #3d3a8c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: rgba(255,255,255,.5);
+      position: relative;
+    }
+
+    .event-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .badge-upcoming { background: var(--upcoming-badge); color: #fff; }
+    .badge-past { background: rgba(0,0,0,.6); color: #fff; }
+
+    .event-body { padding: 12px; }
+
+    .event-club-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      margin-bottom: 4px;
+    }
+
+    .event-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .event-date {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .event-date svg { width: 12px; height: 12px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-dark);
+      padding: 48px 60px 28px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+
+    .footer-brand h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent-orange);
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: rgba(255,255,255,.55);
+      line-height: 1.7;
+    }
+
+    .footer-connect h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .social-icon {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.7);
+      text-decoration: none;
+      transition: all .2s;
+    }
+
+    .social-icon:hover { background: var(--accent-orange); color: #fff; }
+    .social-icon svg { width: 16px; height: 16px; }
+
+    .footer-map { border-radius: var(--radius-sm); overflow: hidden; }
+
+    .map-placeholder {
+      width: 100%;
+      height: 160px;
+      background: #1a2035;
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: opacity .2s;
+      text-decoration: none;
+    }
+
+    .map-placeholder:hover { opacity: .9; }
+
+    .map-btn {
+      background: var(--accent-orange);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .map-label { font-size: 11px; color: rgba(255,255,255,.5); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,.35);
+    }
+
+    .footer-bottom a { color: var(--accent-orange); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { padding: 50px 30px; flex-direction: column; text-align: center; align-items: center; }
+      .hero-desc { margin: 0 auto 24px; }
+      .hero-logo-wrap { width: 140px; height: 140px; }
+      .hero-logo-inner { width: 112px; height: 112px; }
+      .hero-logo-text { font-size: 17px; }
+      .section, .section-dark, .events-section { padding: 40px 24px; }
+      footer { padding: 40px 24px 24px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+      .clubs-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+      .featured-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; left: 0; right: 0;
+        background: var(--nav-bg);
+        padding: 16px 24px;
+        gap: 16px;
+        z-index: 99;
+        border-top: 1px solid rgba(255,255,255,.1);
+      }
+      .nav-hamburger { display: flex; }
+      .hero { padding: 40px 20px 50px; }
+      .hero-title { font-size: 52px; }
+      .clubs-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-grid { grid-template-columns: 1fr; }
+      .event-card { width: 170px; }
+    }
+
+    /* Collapse animation */
+    .collapsible { overflow: hidden; transition: max-height .35s ease; }
+    .collapsible.collapsed { max-height: 0 !important; }
+
+    /* Skeleton shimmer for cards */
+    @keyframes shimmer {
+      0% { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">🏫</div>
+    <span class="nav-title">DTC Events Hub</span>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li>
+      <a href="#clubs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Clubs
+      </a>
+    </li>
+    <li>
+      <a href="#events">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Events
+      </a>
+    </li>
+    <li><button class="btn-login">Log In</button></li>
+  </ul>
+
+  <div class="nav-hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-subtitle">Hello, Welcome to</p>
+    <h1 class="hero-title">Events<br>Hub</h1>
+    <p class="hero-campus">Delhi Technical Campus</p>
+    <p class="hero-desc">Discover events, connect with clubs and societies, and find your community.</p>
+    <a href="#events" class="btn-explore">Explore Events</a>
+  </div>
+  <div class="hero-logo-wrap">
+    <div class="hero-logo-inner">
+      <span class="hero-logo-text">TASUEER</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLUBS SECTION -->
+<section class="section-dark" id="clubs">
+  <h2 class="section-title">Clubs / Societies (17)</h2>
+
+  <!-- Technical -->
+  <div class="clubs-category">
+    <div class="category-header" onclick="toggleCategory('technical')">
+      <h3>Technical (8)</h3>
+      <span class="category-toggle open" id="toggle-technical">▲</span>
+    </div>
+    <div class="collapsible" id="technical" style="max-height:600px">
+      <div class="clubs-grid">
+        <div class="club-card">
+          <div class="club-logo" style="background:#111">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M3 12L12 3l9 9-9 9-9-9z"/></svg>
+          </div>
+          <div class="club-name">ACE DTC</div>
+          <div class="club-desc">The ACE DTC | Blockchain | AR VR</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#0a0a1a">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <div class="club-name">AIR DTC</div>
+          <div class="club-desc">AI Renaissance DTC | AI ML</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+            <span style="font-size:10px;font-weight:800;color:#fff">CESTA</span>
+          </div>
+          <div class="club-name">CESTA DTC</div>
+          <div class="club-desc">Cesta DTC | DSA & CP | Gaming | IoT | Defence Tech | Oldest Tech Club</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#f8fafc;border:1.5px solid #e5e7eb">
+            <span style="font-size:10px;font-weight:800;color:#3b82f6">E-Cell</span>
+          </div>
+          <div class="club-name">E-Cell DTC</div>
+          <div class="club-desc">E-Cell DTC | Entrepreneurship & Innovation</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#166534">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
+          <div class="club-name">FOSS DTC</div>
+          <div class="club-desc">The Foss Club DTC | Open Source | Cyber Security | Linux</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#fff;border:1.5px solid #e5e7eb">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#4285F4" stroke-width="2"/><path d="M12 7v5l3 3" stroke="#EA4335" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="club-name">GDG DTC</div>
+          <div class="club-desc">Google Technologies | Google Cloud | Android | Google Developer Groups On...</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#1a1a1a">
+            <span style="font-size:10px;font-weight:800;color:#2fd52f">GFG</span>
+          </div>
+          <div class="club-name">GFG DTC</div>
+          <div class="club-desc">GeeksforGeeks DTC Campus Body | GFG Resources</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#1a1d2e">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="club-name">INDUS RISE DTC</div>
+          <div class="club-desc">INDUS RISE DTC | Entrepreneurship, Economics & Tech</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cultural -->
+  <div class="clubs-category">
+    <div class="category-header" onclick="toggleCategory('cultural')">
+      <h3>Cultural (7)</h3>
+      <span class="category-toggle open" id="toggle-cultural">▲</span>
+    </div>
+    <div class="collapsible" id="cultural" style="max-height:400px">
+      <div class="clubs-grid">
+        <div class="club-card">
+          <div class="club-logo" style="background:#7c3aed">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <div class="club-name">Music Club DTC</div>
+          <div class="club-desc">Melodies & Rhythms | DTC Music Society</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#be185d">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <div class="club-name">Drama Club DTC</div>
+          <div class="club-desc">Theatre & Performing Arts | DTC Dramatics</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#b45309">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l4 4 4-4M12 8v8"/></svg>
+          </div>
+          <div class="club-name">Photography Club</div>
+          <div class="club-desc">Capturing Moments | Visual Storytelling</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#0891b2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+          </div>
+          <div class="club-name">Dance Society</div>
+          <div class="club-desc">Dance Forms | Fusion | Choreography</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#065f46">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+          </div>
+          <div class="club-name">Literary Club</div>
+          <div class="club-desc">Writing | Debates | Quizzing | Poetry</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#92400e">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="8" r="4"/><path d="M8 14h8l2 7H6l2-7z"/></svg>
+          </div>
+          <div class="club-name">Fashion Club</div>
+          <div class="club-desc">Style | Fashion Shows | Trends</div>
+        </div>
+        <div class="club-card">
+          <div class="club-logo" style="background:#1e3a8a">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M3 3h18v18H3z"/><path d="M7 7h10v10H7z" opacity=".5"/></svg>
+          </div>
+          <div class="club-name">Fine Arts Club</div>
+          <div class="club-desc">Painting | Sketching | Creative Arts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured -->
+  <div class="clubs-category">
+    <div class="category-header" onclick="toggleCategory('featured')">
+      <h3>Featured (2)</h3>
+      <span class="category-toggle open" id="toggle-featured">▲</span>
+    </div>
+    <div class="collapsible" id="featured" style="max-height:300px">
+      <div style="padding: 20px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div class="featured-col-label">Student Branch</div>
+            <div class="club-card">
+              <div class="club-logo" style="background:#fff;border:1.5px solid #e5e7eb">
+                <svg width="28" height="14" viewBox="0 0 56 28"><text x="0" y="22" font-size="22" font-weight="900" fill="#0066cc">IEEE</text></svg>
+              </div>
+              <div class="club-name">IEEE DTC</div>
+              <div class="club-desc">IEEE DTC | Computing and Information Technology</div>
+            </div>
+          </div>
+          <div>
+            <div class="featured-col-label">Student Chapter</div>
+            <div class="club-card">
+              <div class="club-logo" style="background:#fff;border:1.5px solid #e5e7eb">
+                <svg width="28" height="28" viewBox="0 0 24 24"><text x="1" y="19" font-size="12" font-weight="900" fill="#0066cc">acm</text><path d="M17 7l3 3-3 3" stroke="#0066cc" stroke-width="1.5" fill="none"/></svg>
+              </div>
+              <div class="club-name">ACM DTC</div>
+              <div class="club-desc">ACM DTC | Research & Computing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS SECTION -->
+<section class="events-section" id="events">
+  <h2 class="events-title">Events</h2>
+
+  <!-- Upcoming -->
+  <div style="margin-bottom:40px;">
+    <p class="events-sub">Upcoming Events (1)</p>
+    <div class="events-carousel">
+      <div class="event-card">
+        <div class="event-img-placeholder" style="background:linear-gradient(135deg,#0f172a,#1e3a8a);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <span class="event-badge badge-upcoming">Upcoming</span>
+        </div>
+        <div class="event-body">
+          <div class="event-club-name">IEEE DTC</div>
+          <div class="event-name">IEEE Umbrella Event</div>
+          <div class="event-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Date TBD
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Past -->
+  <div>
+    <p class="events-sub">Past Events (44)</p>
+    <div class="events-carousel" id="pastEvents"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h4>Delhi Technical Campus</h4>
+      <p>
+        Website: delhitechnicalcampus.ac.in<br>
+        Tel: +91 9337667800, +91 9005752300<br>
+        Mail: info@delhitechnicalcampus.ac.in<br>
+        Address: 28/1, Knowledge Park-III, Greater Noida – 201306 (U.P.)
+      </p>
+    </div>
+    <div class="footer-connect">
+      <h4>Connect with us</h4>
+      <div class="social-icons">
+        <a class="social-icon" href="#" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a class="social-icon" href="#" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a class="social-icon" href="#" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="social-icon" href="#" title="Website">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-map">
+      <a class="map-placeholder" href="https://maps.google.com/?q=Delhi+Technical+Campus+Greater+Noida" target="_blank" rel="noopener">
+        <div style="color:rgba(255,255,255,.4);font-size:36px;">📍</div>
+        <div class="map-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="white"/></svg>
+          Open in Maps ↗
+        </div>
+        <div class="map-label">Delhi Technical Campus, Greater Noida</div>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © All rights reserved Delhi Technical Campus | Built by <a href="#">SGCODEX (Click Here)</a>
+  </div>
+</footer>
+
+<script>
+  // ── NAV ──
+  function toggleNav() {
+    const links = document.getElementById('navLinks');
+    links.classList.toggle('open');
+  }
+
+  // ── COLLAPSIBLE CATEGORIES ──
+  function toggleCategory(id) {
+    const el = document.getElementById(id);
+    const toggle = document.getElementById('toggle-' + id);
+    const isOpen = !el.classList.contains('collapsed');
+    if (isOpen) {
+      el.classList.add('collapsed');
+      toggle.classList.remove('open');
+    } else {
+      el.style.maxHeight = el.scrollHeight + 'px';
+      el.classList.remove('collapsed');
+      toggle.classList.add('open');
+    }
+  }
+
+  // ── PAST EVENTS DATA ──
+  const pastEvents = [
+    { club: 'IEEE DTC', name: 'IEEE TECH SAGAR - 1', date: 'Apr 2, 2025', color: '#0f172a,#1e3a8a' },
+    { club: 'E-Cell DTC', name: 'Bidding Wars', date: 'Mar 28, 2025', color: '#1a1a2e,#7c3aed' },
+    { club: 'E-Cell DTC', name: 'VisionX with Sandeep Jain Sir', date: 'Mar 28, 2025', color: '#fff7ed,#f97316', dark: false },
+    { club: 'CESTA DTC', name: 'Tech Aarambh', date: 'Mar 11, 2025', color: '#0f172a,#06b6d4' },
+    { club: 'FOSS DTC', name: 'FOSS HACK 2025', date: 'Feb 22, 2025', color: '#052e16,#16a34a' },
+    { club: 'IEEE DTC', name: 'Web & BI Synergy Bootcamp', date: 'Feb 12, 2025', color: '#1e1b4b,#4f46e5' },
+    { club: 'GDG DTC', name: 'Google Cloud Day', date: 'Jan 25, 2025', color: '#0c4a6e,#0284c7' },
+    { club: 'ACM DTC', name: 'ACM Hackathon 2025', date: 'Jan 10, 2025', color: '#1c1917,#dc2626' },
+    { club: 'GFG DTC', name: 'DSA Workshop', date: 'Dec 20, 2024', color: '#14532d,#22c55e' },
+    { club: 'CESTA DTC', name: 'Gaming Fiesta', date: 'Dec 5, 2024', color: '#3b0764,#a855f7' },
+  ];
+
+  const container = document.getElementById('pastEvents');
+  pastEvents.forEach(ev => {
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    const textColor = ev.dark === false ? '#333' : 'rgba(255,255,255,.4)';
+    card.innerHTML = `
+      <div class="event-img-placeholder" style="background:linear-gradient(135deg,#${ev.color.split(',').map(c => c.replace('#','')).join(',#')});">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="${textColor}" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="event-badge badge-past">Past</span>
+      </div>
+      <div class="event-body">
+        <div class="event-club-name">${ev.club}</div>
+        <div class="event-name">${ev.name}</div>
+        <div class="event-date">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          ${ev.date}
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Set initial max-heights for collapsibles
+  document.querySelectorAll('.collapsible').forEach(el => {
+    if (!el.classList.contains('collapsed')) {
+      el.style.maxHeight = el.scrollHeight + 2000 + 'px';
+    }
+  });
+</script>
+</body>
+</html>
