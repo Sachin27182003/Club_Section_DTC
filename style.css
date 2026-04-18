@@ -7,14 +7,13 @@
 }
 
 body {
-  background-color: rgb(69, 69, 163);
+  background-color: rgb(62, 63, 147);
   scroll-behavior: smooth;
-
 }
 
 .container {
   /* width: 100vw; */
-  background-color: rgb(71, 71, 188);
+  background-color: rgb(62, 63, 147);
 }
 
 /* Navbar Section */
@@ -24,20 +23,25 @@ body {
   justify-content: center;
   align-items: center;
   height: 20%;
-  gap: 35vw;
+  gap: 50vw;
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid white;
-  background-color: rgb(35, 44, 114); 
-
+  background-color: rgb(35, 44, 114);
 
   /* position: sticky;
     top: 0;
     z-index: 1000; */
 }
 
+/* 1. Updated Navbar Logo styles: circular, soft shadow */
 .logo-dtc-nav {
   width: 50px;
+  height: 50px; /* added height for circular shape */
+  border-radius: 50%; /* made circular */
+  object-fit: cover; /* ensures image fits well */
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 .logo-dtc {
@@ -63,7 +67,8 @@ body {
 .navbar-center a svg {
   width: 15px;
   height: 15px;
-  color: white;
+  color: rgb(228, 228, 191);
+
 }
 
 .navbar-center-text {
@@ -75,6 +80,8 @@ body {
 
 .navbar-text {
   color: white;
+  color: rgb(228, 228, 191);
+
 }
 
 /* Hero Section */
@@ -83,28 +90,33 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20vw;
+  gap: 30vw;
   height: 90vh;
 }
 
 .hero-left h3 {
   font-size: 30px;
+  color: rgb(228, 228, 191);
+  
 }
 
 .hero-left h1 {
   font-size: 100px;
-  color: rgb(239, 92, 66);
+  color: rgb(214, 67, 41);
 }
 
 .hero-left p {
   font-size: 20px;
+  color: rgb(228, 228, 191);
 }
 
 .hero-left button {
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: 16px;
   background-color: rgb(35, 44, 114);
   color: white;
+  color: rgb(228, 228, 191);
+
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -133,10 +145,13 @@ body {
   }
 }
 
+/* 2. Added Soft Shadow to Hero Carousel images (drop-shadow respects potential transparency or non-box shapes) */
 .building-img {
   width: 200px;
   margin-bottom: 20px;
   border-radius: 100px;
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 /* Clubs & Society */
@@ -145,19 +160,22 @@ body {
   padding: 30px;
   text-align: center;
   color: white;
+  color: rgb(228, 228, 191);
+
   background-color: rgb(35, 44, 114);
 }
 
 .clubs-society h1 {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .society {
-    padding: 20px;
-    background-color: rgb(71, 71, 188);
-    border: 2px solid white;
-    border-radius: 20px;
-    margin-bottom: 10px;
+  padding: 20px;
+  background-color: rgb(62, 63, 147);
+
+  border: 2px solid white;
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
 
 /* Technical Society */
@@ -166,10 +184,12 @@ body {
   padding: 20px 30px 20px 30px;
   text-align: center;
   color: white;
+  color: rgb(228, 228, 191);
+
 }
 
 .clubs h2 {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .cards {
@@ -191,11 +211,14 @@ body {
   transform: translateY(-5px);
 }
 
+/* 3. Club Card logos: consistent soft box-shadow on circular logos */
 .card img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   margin-bottom: 10px;
+  /* Added Beautiful Box Shadow for circular images */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card h3 {
@@ -214,6 +237,8 @@ body {
   background: #4b4b9b;
   padding: 40px;
   color: white;
+  color: rgb(228, 228, 191);
+
 }
 
 .main-title-event {
@@ -248,9 +273,13 @@ body {
   gap: 10px;
 }
 
+/* 4. Upcoming event logo: made circular to match past logo and added shadow */
 .logo-event {
   width: 30px;
   height: 30px;
+  border-radius: 50%; /* added to match past event logo */
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 /* IMAGE */
@@ -258,10 +287,13 @@ body {
   position: relative;
 }
 
+/* 5. Upcoming event main image: Added soft drop shadow */
 .card-image-event img {
   width: 100%;
   height: 250px;
   object-fit: cover;
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 .badge-event {
@@ -270,6 +302,8 @@ body {
   left: 10px;
   background: #22c55e;
   color: white;
+  color: rgb(228, 228, 191);
+
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 12px;
@@ -295,6 +329,8 @@ body {
 .events-section-event-past {
   padding: 30px;
   color: white;
+  color: rgb(228, 228, 191);
+
   background-color: #4b4b9b;
 }
 
@@ -343,10 +379,13 @@ body {
   gap: 10px;
 }
 
+/* 6. Past event org logo: added soft shadow */
 .logo-event-past {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 /* IMAGE */
@@ -354,10 +393,13 @@ body {
   position: relative;
 }
 
+/* 7. Past event main image: Added soft drop shadow */
 .card-image-event-past img {
   width: 100%;
   height: 250px;
   object-fit: cover;
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 /* BADGE */
@@ -367,6 +409,8 @@ body {
   left: 10px;
   background: #ef4444;
   color: white;
+  color: rgb(228, 228, 191);
+
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 12px;
@@ -399,7 +443,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .left-event-past {
@@ -437,13 +481,19 @@ body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;   /* centers horizontally */
-  text-align: center;    /* centers text */
+  align-items: center; /* centers horizontally */
+  text-align: center; /* centers text */
 }
 
+/* 8. Footer logo: made circular and added shadow */
 .logo-club-footer {
   width: 70px;
+  height: 70px; /* added height for circular shape */
+  border-radius: 50%; /* made circular */
+  object-fit: cover; /* ensures image fits well */
   margin-bottom: 15px;
+  /* Added Beautiful Drop Shadow */
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 .left-club-footer h2 {
