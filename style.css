@@ -6,6 +6,11 @@
   font-family: sans-serif, Arial, Helvetica;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: rgb(62, 63, 147);
   scroll-behavior: smooth;
@@ -79,7 +84,6 @@ body {
 }
 
 .navbar-text {
-  color: white;
   color: rgb(228, 228, 191);
 
 }
@@ -114,7 +118,6 @@ body {
   padding: 10px 20px;
   font-size: 16px;
   background-color: rgb(35, 44, 114);
-  color: white;
   color: rgb(228, 228, 191);
 
   border: none;
@@ -159,7 +162,6 @@ body {
 .clubs-society {
   padding: 30px;
   text-align: center;
-  color: white;
   color: rgb(228, 228, 191);
 
   background-color: rgb(35, 44, 114);
@@ -183,7 +185,6 @@ body {
 .clubs {
   padding: 20px 30px 20px 30px;
   text-align: center;
-  color: white;
   color: rgb(228, 228, 191);
 
 }
@@ -236,7 +237,6 @@ body {
 .events-section {
   background: #4b4b9b;
   padding: 40px;
-  color: white;
   color: rgb(228, 228, 191);
 
 }
@@ -301,7 +301,6 @@ body {
   bottom: 10px;
   left: 10px;
   background: #22c55e;
-  color: white;
   color: rgb(228, 228, 191);
 
   padding: 5px 12px;
@@ -328,7 +327,6 @@ body {
 /* Past Events */
 .events-section-event-past {
   padding: 30px;
-  color: white;
   color: rgb(228, 228, 191);
 
   background-color: #4b4b9b;
@@ -408,7 +406,6 @@ body {
   bottom: 10px;
   left: 10px;
   background: #ef4444;
-  color: white;
   color: rgb(228, 228, 191);
 
   padding: 5px 12px;
@@ -562,4 +559,118 @@ body {
   padding: 15px;
   font-size: 14px;
   color: #ccc;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+/* ---------------------------------------------------
+   Tablet (Medium screens, max-width: 1024px)
+   --------------------------------------------------- */
+@media (max-width: 1024px) {
+  /* Navbar */
+  .navbar {
+    gap: 10vw; /* Reduced from 50vw */
+    padding: 20px;
+    justify-content: space-between;
+  }
+
+  /* Hero Section */
+  .hero-content {
+    gap: 5vw; /* Reduced from 30vw */
+    height: auto;
+    padding: 60px 20px;
+  }
+  
+  .hero-left h1 {
+    font-size: 70px; /* Scale down massive text */
+  }
+
+  .carousel {
+    width: 100%;
+  }
+
+  /* Clubs Grid - switch from 4 to 2 columns */
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------------------------------------------------
+   Mobile (Small screens, max-width: 768px)
+   --------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 10px;
+  }
+  
+  .navbar-center {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  /* Hero Section */
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+    gap: 40px;
+  }
+  
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-left h1 {
+    font-size: 50px;
+  }
+
+  .hero-left h3 {
+    font-size: 24px;
+  }
+
+  .hero-left p {
+    font-size: 16px;
+  }
+
+  .building-img {
+    width: 150px; /* Make carousel images slightly smaller */
+  }
+
+  /* Clubs Grid - switch from 2 to 1 column */
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Events Section */
+  .card-event {
+    width: 100%; /* Allow upcoming event card to fill mobile screen */
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .main-title-event {
+    font-size: 32px;
+  }
+
+  /* Footer */
+  .container-club-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .left-club-footer, 
+  .center-club-footer, 
+  .right-club-footer {
+    width: 100%;
+    min-width: auto;
+  }
 }
